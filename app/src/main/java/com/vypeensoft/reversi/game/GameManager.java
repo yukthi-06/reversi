@@ -49,17 +49,19 @@ public class GameManager {
         board.set(r, c, state.currentPlayer);
         for(int[] f : flipped) board.set(f[0], f[1], state.currentPlayer);
         syncState();
-        updateScores();
         listener.onMovePlayed(r, c, flipped);
         
         int opp = state.currentPlayer == Board.BLACK ? Board.WHITE : Board.BLACK;
         if(MoveValidator.hasLegalMove(board, opp)) {
             state.currentPlayer = opp;
+            updateScores();
             checkAITurn();
         } else if(!MoveValidator.hasLegalMove(board, state.currentPlayer)) {
+            updateScores();
             listener.onGameOver();
         } else {
             // Pass turn
+            updateScores();
             checkAITurn();
         }
     }
