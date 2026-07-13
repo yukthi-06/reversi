@@ -50,6 +50,6 @@
         android:id="@+id/btnSaveSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save and Exit" />
+        android:text="Save and Close" />
         
 </LinearLayout>
