@@ -1,0 +1,462 @@
+Create an android project in java which is a game of "Reversi". 
+
+gradle 9.5.1
+java/jdk 17
+android SDK 35
+
+always give me CMD commands or BASH commands. never give powershell commands.
+you can yourself rename or delete folders within the project scope.  
+
+base package name should be com.vypeensoft.*
+
+Save all settings in a json file in /sdcard/Vypeensoft/Reversi/settings/settings.json
+
+create a single prompt to use to AI coding
+
+
+====================================================================
+
+Use the following as a single, comprehensive AI coding prompt:
+
+Create a complete Android Studio project for a fully playable **Reversi (Othello)** game.
+
+## Environment
+
+* Android Gradle Plugin compatible with Gradle 9.5.1
+* Gradle Wrapper: 9.5.1
+* Java: JDK 17
+* Android SDK: API 35
+* Minimum SDK: 24
+* Target SDK: 35
+* Language: Java only
+* Build System: Gradle Kotlin DSL or Groovy (either is acceptable)
+* Do not use Kotlin anywhere.
+* Do not use Jetpack Compose.
+* Use Android Views and XML layouts only.
+
+Base package:
+
+com.vypeensoft.reversi
+
+The project must compile without errors in Android Studio using JDK 17 and SDK 35.
+
+---
+
+## Development Rules
+
+* Produce production-quality code.
+* No placeholder methods.
+* No TODO comments.
+* No stub implementations.
+* No incomplete classes.
+* Every Java file must compile.
+* Use meaningful comments where appropriate.
+* Organize code into logical packages.
+* Follow clean architecture as much as practical.
+* Keep classes reasonably small.
+* Avoid duplicated code.
+
+---
+
+## Folder Structure
+
+Organize into packages similar to:
+
+com.vypeensoft.reversi
+
+* activity
+* game
+* board
+* ai
+* model
+* util
+* settings
+* storage
+* view
+
+---
+
+## Game Requirements
+
+Implement the complete Reversi board game.
+
+### Board
+
+* 8x8 board
+* Initial four pieces
+* Standard Reversi rules
+* Detect all legal moves
+* Highlight legal moves
+* Flip opponent pieces correctly
+* Skip turn if player has no legal moves
+* End game when no player can move
+* Count black and white pieces
+* Winner screen
+* Draw detection
+
+---
+
+## Game Modes
+
+Support:
+
+* Human vs Human
+* Human vs AI
+
+---
+
+## AI
+
+Implement computer opponent.
+
+Difficulty:
+
+* Easy
+
+  * random legal move
+
+* Medium
+
+  * prioritize corners
+  * avoid dangerous squares
+  * basic heuristic evaluation
+
+* Hard
+
+  * Minimax
+  * Alpha Beta pruning
+  * Configurable search depth
+  * Board evaluation including:
+
+    * mobility
+    * corners
+    * stability approximation
+    * piece difference
+    * frontier pieces
+
+AI should play reasonably well.
+
+---
+
+## UI
+
+Main Menu
+
+Buttons:
+
+* New Game
+* Continue Game
+* Settings
+* About
+* Exit
+
+Game Screen
+
+Display:
+
+* board
+* current player
+* score
+* difficulty
+* undo button
+* restart button
+* menu button
+
+Use animations for:
+
+* piece flipping
+* move placement
+
+Support:
+
+* portrait
+* landscape
+
+Use Material Components where appropriate.
+
+---
+
+## Board Rendering
+
+Create a custom View for the board.
+
+Requirements:
+
+* smooth rendering
+* scalable
+* touch support
+* highlighted moves
+* selected cell
+* board coordinates optional
+
+Draw pieces using Canvas.
+
+No bitmap assets required.
+
+---
+
+## Settings
+
+Store ALL settings in exactly:
+
+/sdcard/Vypeensoft/Reversi/settings/settings.json
+
+Do not use SharedPreferences for game settings.
+
+Implement JSON read/write.
+
+Create folders automatically if missing.
+
+Store values such as:
+
+* soundEnabled
+* musicEnabled
+* animationsEnabled
+* difficulty
+* aiEnabled
+* firstPlayer
+* theme
+* vibrationEnabled
+* boardHighlight
+* searchDepth
+
+Use Gson or standard org.json.
+
+---
+
+## Save Game
+
+Implement save/load.
+
+Location:
+
+/sdcard/Vypeensoft/Reversi/
+
+Files:
+
+savegame.json
+
+Store:
+
+* board
+* current player
+* score
+* move history
+* difficulty
+* game mode
+* elapsed time
+
+Continue Game loads this file.
+
+---
+
+## Undo
+
+Allow undo.
+
+Human vs Human:
+
+* unlimited undo
+
+Human vs AI:
+
+* undo both player's last moves together
+
+---
+
+## Sound
+
+Include support for:
+
+* move
+* flip
+* win
+* lose
+* draw
+* button click
+
+Mute through settings.
+
+---
+
+## Themes
+
+Support:
+
+* Light
+* Dark
+* Green classic board
+
+---
+
+## Animations
+
+Animate:
+
+* flips
+* new game
+* winner dialog
+
+Allow disabling animations.
+
+---
+
+## About Screen
+
+Display:
+
+* App Name
+* Version
+* Author
+* Package Name
+* Android SDK
+* Java Version
+
+---
+
+## Architecture
+
+Create classes similar to:
+
+GameManager
+
+Board
+
+Move
+
+MoveValidator
+
+AIPlayer
+
+MinimaxAI
+
+RandomAI
+
+MediumAI
+
+GameState
+
+SettingsManager
+
+JsonStorage
+
+BoardView
+
+SoundManager
+
+AnimationManager
+
+FileUtils
+
+MainActivity
+
+GameActivity
+
+SettingsActivity
+
+AboutActivity
+
+---
+
+## JSON Format
+
+settings.json example:
+
+{
+"soundEnabled": true,
+"musicEnabled": true,
+"animationsEnabled": true,
+"difficulty": "MEDIUM",
+"aiEnabled": true,
+"firstPlayer": "BLACK",
+"theme": "GREEN",
+"vibrationEnabled": true,
+"boardHighlight": true,
+"searchDepth": 5
+}
+
+savegame.json should contain all information needed to resume the game exactly.
+
+---
+
+## Permissions
+
+Request runtime permission if necessary for external storage on supported Android versions.
+
+Handle Android scoped storage appropriately for SDK 35.
+
+Use app-specific or compatible storage APIs where required while still ensuring the settings are stored at:
+
+/sdcard/Vypeensoft/Reversi/settings/settings.json
+
+---
+
+## Error Handling
+
+Gracefully handle:
+
+* corrupted JSON
+* missing files
+* invalid save
+* permission denied
+* storage unavailable
+
+Automatically recreate default settings.
+
+---
+
+## Performance
+
+* Avoid unnecessary allocations.
+* Keep rendering smooth.
+* Minimize object creation during gameplay.
+* AI should run on a background thread.
+* UI must remain responsive.
+
+---
+
+## Documentation
+
+Include comments explaining:
+
+* AI algorithm
+* move validation
+* board evaluation
+* JSON storage
+* rendering logic
+
+---
+
+## Deliverables
+
+Generate the COMPLETE Android Studio project.
+
+Include:
+
+* every Java source file
+* every XML layout
+* AndroidManifest.xml
+* Gradle files
+* drawable resources
+* colors
+* themes
+* strings
+* icons if needed
+* ProGuard rules
+* README.md
+
+No missing files.
+
+Everything must compile successfully using:
+
+* Gradle 9.5.1
+* JDK 17
+* Android SDK 35
+
+Do not leave placeholders.
+
+Produce complete source code for every file.
+
+Whenever project files need to be renamed, moved, or removed, also provide the required command-line commands using only CMD or Bash syntax. Never output PowerShell commands.
+
+This prompt is designed to minimize missing implementations and make the AI generate a complete, compilable Android Studio project.

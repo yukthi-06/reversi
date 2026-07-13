@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Reversi</string>
+    <string name="new_game">New Game</string>
+    <string name="continue_game">Continue Game</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <string name="exit">Exit</string>
+    <string name="undo">Undo</string>
+    <string name="restart">Restart</string>
+    <string name="menu">Menu</string>
+    <string name="black_turn">Black\'s Turn</string>
+    <string name="white_turn">White\'s Turn</string>
+    <string name="black_wins">Black Wins!</string>
+    <string name="white_wins">White Wins!</string>
+    <string name="draw">Draw!</string>
+    <string name="score_format">Black: %1$d | White: %2$d</string>
+</resources>
