@@ -47,7 +47,8 @@ public class SettingsManager {
             dir.mkdirs();
             File file = new File(dir, "settings.json");
             FileWriter writer = new FileWriter(file);
-            new Gson().toJson(this, writer);
+            com.google.gson.Gson gson = new com.google.gson.GsonBuilder().setPrettyPrinting().create();
+            gson.toJson(this, writer);
             writer.close();
         } catch(Exception ignored) {}
     }
