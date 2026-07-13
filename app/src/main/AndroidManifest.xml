@@ -24,6 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.ModeSelectionActivity" />
         <activity android:name=".activity.GameActivity" />
         <activity android:name=".activity.SettingsActivity" />
         <activity android:name=".activity.AboutActivity" />

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
 import androidx.appcompat.app.AppCompatActivity;
+import android.app.AlertDialog;
 import com.vypeensoft.reversi.R;
 import com.vypeensoft.reversi.storage.SettingsManager;
 public class MainActivity extends AppCompatActivity {
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         
         SettingsManager.getInstance().load();
         
-        findViewById(R.id.btnNew).setOnClickListener(v -> startActivity(new Intent(this, GameActivity.class)));
+        findViewById(R.id.btnNew).setOnClickListener(v -> startActivity(new Intent(this, ModeSelectionActivity.class)));
         findViewById(R.id.btnContinue).setOnClickListener(v -> {
             Intent i = new Intent(this, GameActivity.class);
             i.putExtra("load", true);
