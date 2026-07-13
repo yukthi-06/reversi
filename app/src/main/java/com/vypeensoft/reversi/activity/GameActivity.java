@@ -37,7 +37,7 @@ public class GameActivity extends AppCompatActivity implements GameManager.GameL
         super.onPause();
         JsonStorage.saveGame(gameManager.getState());
     }
-    @Override public void onMovePlayed(int r, int c, List<int[]> flipped) { boardView.invalidate(); }
+    @Override public void onMovePlayed(int r, int c, List<int[]> flipped) { boardView.animateFlips(flipped); }
     @Override public void onScoreUpdated(int black, int white, int turn) {
         scoreText.setText("Black: " + black + " | White: " + white + "\n" + (turn == Board.BLACK ? "Black" : "White") + "'s turn");
     }

@@ -67,6 +67,7 @@ public class GameManager {
     private void checkAITurn() {
         if(ai != null && state.currentPlayer == Board.WHITE) {
             new Thread(() -> {
+                try { Thread.sleep(800); } catch(Exception ignored) {}
                 int[] m = ai.getMove(board, state.currentPlayer);
                 handler.post(() -> {
                     if(m != null) playMove(m[0], m[1]);

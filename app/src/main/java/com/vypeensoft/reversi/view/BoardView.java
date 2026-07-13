@@ -1,4 +1,5 @@
 package com.vypeensoft.reversi.view;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -7,20 +8,39 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import com.vypeensoft.reversi.board.Board;
+import java.util.List;
+
 public class BoardView extends View {
     private Board board;
     private Paint paintGrid, paintBlack, paintWhite, paintBg;
     private int cellSize;
     private OnCellClickListener listener;
+    
+    private List<int[]> flippingPieces;
+    private float flipProgress = 0f;
+
     public BoardView(Context context, AttributeSet attrs) {
         super(context, attrs);
         paintGrid = new Paint(); paintGrid.setColor(Color.BLACK); paintGrid.setStrokeWidth(3);
         paintBlack = new Paint(); paintBlack.setColor(Color.BLACK); paintBlack.setAntiAlias(true);
         paintWhite = new Paint(); paintWhite.setColor(Color.WHITE); paintWhite.setAntiAlias(true);
-        paintBg = new Paint(); paintBg.setColor(Color.parseColor("#1B5E20")); // Green
+        paintBg = new Paint(); paintBg.setColor(Color.parseColor("#1B5E20"));
     }
+    
     public void setBoard(Board board) { this.board = board; invalidate(); }
     public void setOnCellClickListener(OnCellClickListener listener) { this.listener = listener; }
+    
+    public void animateFlips(List<int[]> flipped) {
+        this.flippingPieces = flipped;
+        ValueAnimator animator = ValueAnimator.ofFloat(0f, 1f);
+        animator.setDuration(400);
+        animator.addUpdateListener(anim -> {
+            flipProgress = (float) anim.getAnimatedValue();
+            invalidate();
+        });
+        animator.start();
+    }
+
     @Override protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         int w = getWidth(), h = getHeight();
@@ -39,17 +59,42 @@ public class BoardView extends View {
                     float cx = c * cellSize + cellSize / 2f;
                     float cy = r * cellSize + cellSize / 2f;
                     float radius = cellSize * 0.4f;
-                    if(p == Board.BLACK) {
-                        paintBlack.setShader(new android.graphics.RadialGradient(cx - radius/3, cy - radius/3, radius, Color.parseColor("#666666"), Color.BLACK, android.graphics.Shader.TileMode.CLAMP));
-                        canvas.drawCircle(cx, cy, radius, paintBlack);
+                    
+                    boolean isFlipping = false;
+                    if(flippingPieces != null) {
+                        for(int[] f : flippingPieces) {
+                            if(f[0] == r && f[1] == c) {
+                                isFlipping = true; break;
+                            }
+                        }
+                    }
+                    
+                    if(isFlipping) {
+                        float scaleX = flipProgress < 0.5f ? (1f - (flipProgress * 2f)) : ((flipProgress - 0.5f) * 2f);
+                        int drawColor = flipProgress < 0.5f ? (p == Board.BLACK ? Board.WHITE : Board.BLACK) : p;
+                        
+                        canvas.save();
+                        canvas.scale(scaleX, 1f, cx, cy);
+                        drawCoin(canvas, drawColor, cx, cy, radius);
+                        canvas.restore();
                     } else {
-                        paintWhite.setShader(new android.graphics.RadialGradient(cx - radius/3, cy - radius/3, radius, Color.WHITE, Color.parseColor("#999999"), android.graphics.Shader.TileMode.CLAMP));
-                        canvas.drawCircle(cx, cy, radius, paintWhite);
+                        drawCoin(canvas, p, cx, cy, radius);
                     }
                 }
             }
         }
     }
+    
+    private void drawCoin(Canvas canvas, int p, float cx, float cy, float radius) {
+        if(p == Board.BLACK) {
+            paintBlack.setShader(new android.graphics.RadialGradient(cx - radius/3, cy - radius/3, radius, Color.parseColor("#666666"), Color.BLACK, android.graphics.Shader.TileMode.CLAMP));
+            canvas.drawCircle(cx, cy, radius, paintBlack);
+        } else {
+            paintWhite.setShader(new android.graphics.RadialGradient(cx - radius/3, cy - radius/3, radius, Color.WHITE, Color.parseColor("#999999"), android.graphics.Shader.TileMode.CLAMP));
+            canvas.drawCircle(cx, cy, radius, paintWhite);
+        }
+    }
+
     @Override public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
             int c = (int)(event.getX() / cellSize);
