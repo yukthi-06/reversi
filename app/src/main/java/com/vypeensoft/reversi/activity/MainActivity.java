@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
             i.putExtra("load", true);
             startActivity(i);
         });
+        findViewById(R.id.btnSettings).setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
         findViewById(R.id.btnExit).setOnClickListener(v -> finish());
     }
 }

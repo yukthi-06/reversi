@@ -86,24 +86,34 @@ public class BoardView extends View {
     }
     
     private void drawCoin(Canvas canvas, int p, float cx, float cy, float radius) {
-        paintBlack.setShader(null);
-        paintWhite.setShader(null);
-        
-        Paint paintShadow = new Paint();
-        paintShadow.setColor(Color.parseColor("#44000000"));
-        paintShadow.setAntiAlias(true);
-        canvas.drawCircle(cx + 3, cy + 4, radius, paintShadow);
-        
-        if(p == Board.BLACK) {
-            paintBlack.setColor(Color.parseColor("#333333"));
-            canvas.drawCircle(cx, cy, radius, paintBlack);
-            paintBlack.setColor(Color.BLACK);
-            canvas.drawCircle(cx, cy, radius * 0.7f, paintBlack);
+        if(com.vypeensoft.reversi.storage.SettingsManager.getInstance().use3dCoins) {
+            if(p == Board.BLACK) {
+                paintBlack.setShader(new android.graphics.RadialGradient(cx - radius/3, cy - radius/3, radius, Color.parseColor("#666666"), Color.BLACK, android.graphics.Shader.TileMode.CLAMP));
+                canvas.drawCircle(cx, cy, radius, paintBlack);
+            } else {
+                paintWhite.setShader(new android.graphics.RadialGradient(cx - radius/3, cy - radius/3, radius, Color.WHITE, Color.parseColor("#999999"), android.graphics.Shader.TileMode.CLAMP));
+                canvas.drawCircle(cx, cy, radius, paintWhite);
+            }
         } else {
-            paintWhite.setColor(Color.parseColor("#DDDDDD"));
-            canvas.drawCircle(cx, cy, radius, paintWhite);
-            paintWhite.setColor(Color.WHITE);
-            canvas.drawCircle(cx, cy, radius * 0.7f, paintWhite);
+            paintBlack.setShader(null);
+            paintWhite.setShader(null);
+            
+            Paint paintShadow = new Paint();
+            paintShadow.setColor(Color.parseColor("#44000000"));
+            paintShadow.setAntiAlias(true);
+            canvas.drawCircle(cx + 3, cy + 4, radius, paintShadow);
+            
+            if(p == Board.BLACK) {
+                paintBlack.setColor(Color.parseColor("#333333"));
+                canvas.drawCircle(cx, cy, radius, paintBlack);
+                paintBlack.setColor(Color.BLACK);
+                canvas.drawCircle(cx, cy, radius * 0.7f, paintBlack);
+            } else {
+                paintWhite.setColor(Color.parseColor("#DDDDDD"));
+                canvas.drawCircle(cx, cy, radius, paintWhite);
+                paintWhite.setColor(Color.WHITE);
+                canvas.drawCircle(cx, cy, radius * 0.7f, paintWhite);
+            }
         }
     }
 

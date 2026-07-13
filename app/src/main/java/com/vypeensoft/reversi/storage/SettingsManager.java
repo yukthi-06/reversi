@@ -14,6 +14,7 @@ public class SettingsManager {
     public boolean vibrationEnabled = true;
     public boolean boardHighlight = true;
     public int searchDepth = 5;
+    public boolean use3dCoins = false;
     private static SettingsManager instance;
     public static SettingsManager getInstance() {
         if(instance == null) instance = new SettingsManager();
