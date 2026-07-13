@@ -39,10 +39,13 @@ public class GameActivity extends AppCompatActivity implements GameManager.GameL
     }
     @Override public void onMovePlayed(int r, int c, List<int[]> flipped) { boardView.invalidate(); }
     @Override public void onScoreUpdated(int black, int white, int turn) {
-        scoreText.setText("Black: " + black + " | White: " + white + " (" + (turn == Board.BLACK ? "Black" : "White") + "'s turn)");
+        scoreText.setText("Black: " + black + " | White: " + white + "\n" + (turn == Board.BLACK ? "Black" : "White") + "'s turn");
     }
     @Override public void onGameOver() {
-        scoreText.setText("Game Over! " + (gameManager.getState().scoreBlack > gameManager.getState().scoreWhite ? "Black" : "White") + " wins!");
+        int black = gameManager.getState().scoreBlack;
+        int white = gameManager.getState().scoreWhite;
+        String winner = black > white ? "Black wins!" : (white > black ? "White wins!" : "It's a draw!");
+        scoreText.setText("Game Over! " + winner + "\nBlack: " + black + " | White: " + white);
     }
     @Override public void onBoardUpdated() { boardView.invalidate(); }
 }
