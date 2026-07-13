@@ -38,7 +38,14 @@ public class BoardView extends View {
                 if(p != Board.EMPTY) {
                     float cx = c * cellSize + cellSize / 2f;
                     float cy = r * cellSize + cellSize / 2f;
-                    canvas.drawCircle(cx, cy, cellSize * 0.4f, p == Board.BLACK ? paintBlack : paintWhite);
+                    float radius = cellSize * 0.4f;
+                    if(p == Board.BLACK) {
+                        paintBlack.setShader(new android.graphics.RadialGradient(cx - radius/3, cy - radius/3, radius, Color.parseColor("#666666"), Color.BLACK, android.graphics.Shader.TileMode.CLAMP));
+                        canvas.drawCircle(cx, cy, radius, paintBlack);
+                    } else {
+                        paintWhite.setShader(new android.graphics.RadialGradient(cx - radius/3, cy - radius/3, radius, Color.WHITE, Color.parseColor("#999999"), android.graphics.Shader.TileMode.CLAMP));
+                        canvas.drawCircle(cx, cy, radius, paintWhite);
+                    }
                 }
             }
         }
